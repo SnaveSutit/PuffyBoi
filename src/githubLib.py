@@ -6,8 +6,6 @@ import signal
 
 from discord import channel
 
-GITHUB_KEY = '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'
-
 ROOT_DIR = Path('/home/snavesutit/minecraft_servers/mapjam/')
 
 SERVER_DIR = Path(ROOT_DIR, 'server/')

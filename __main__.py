@@ -1,7 +1,9 @@
 import discord
+from discord import embeds
 from discord.ext import commands
 from os import environ
 import src.githubLib as git
+from time import sleep
 
 command_prefix = ">"
 def get_prefix(bot, message): return command_prefix
@@ -41,17 +43,20 @@ async def pull(ctx):
 
 			msg = await channel.send(embed=discord.Embed(
 				title='>pull world',
-				description='Taking the world from the server and putting it on the github repo',
-				thumbnail=''
-				),
-			)
+				description='Taking the world from the server and putting it on the github repo'
+			).set_thumbnail(
+				url=''
+			))
 
-			git.pull_world()
+			# git.pull_world()
+			sleep(1)
 
 			await msg.edit(embed=discord.Embed(
-				title='>pull world <:Yes:723386284277497907>',
-				description='World synced to git')
-			)
+				title='>pull world',
+				description='World synced to git'
+			).set_thumbnail(
+				url=''
+			))
 
 	except Exception as e:
 		await channel.send(f'```\n{e}\n```')
