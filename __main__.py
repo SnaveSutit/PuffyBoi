@@ -1,62 +1,162 @@
 import discord
+from pathlib import Path
 from discord import embeds
 from discord.ext import commands
 from os import environ
 import src.githubLib as git
+from src.status_boxes import StatusBox
 from time import sleep
+import json
+import minecraft.rcon as rcon
+
+SERVER_PROPERTIES_PATH = Path('/home/snavesutit//minecraft_servers/mapjam/server/server_properties.json')
 
 command_prefix = ">"
 def get_prefix(bot, message): return command_prefix
 bot = commands.Bot(command_prefix=get_prefix,case_insensitive=True,status=discord.Status('online'),activity=discord.Activity())
 
+with open(SERVER_PROPERTIES_PATH.as_posix(), 'r') as file:
+	properties = json.loads(file.read())
+
+rc = rcon.RconHandler(['localhost', properties['rcon']['port'], properties['rcon']['password']])
 
 @bot.event
 async def on_ready():
 	print('{0.user.name} {0.user.id} online!'.format(bot))
 
 
-@bot.command(name='push')
-async def push(ctx):
+@bot.command(name='rebootserver')
+async def rebootmc(ctx):
+
+	if ctx.guild.id != 867481364538327050: return
+
+	box = StatusBox(
+		title='>rebootserver',
+		description='Server',
+		thumbnail='https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/loading.gif?raw=true',
+		footer='Action in progress...',
+		author=ctx.message.author
+	)
+	msg = await ctx.channel.send(embed=box)
+
+	rc.execute('stop')
+
+	box.set_footer('Action Complete!')
+	box.set_thumbnail('https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/checkmark.gif?raw=true')
+	await msg.edit(embed=box)
+
+
+
+@bot.command(name='bump')
+async def bump(ctx):
+
+	if ctx.guild.id != 867481364538327050: return
+
 	message:discord.Message = ctx.message
 	channel:discord.TextChannel = message.channel
 
 	try:
 		command, arg = message.content[1:].split(' ')
 
-		if arg == 'all':
-			msg = await channel.send('Pushing git to server <a:spinner:867932823590412308>')
-			git.push_all(ctx)
-			await msg.edit(content='Server synced with git <:Yes:723386284277497907>')
+		if arg == 'world':
+
+			await ctx.channel.send('I said don\'t use this one >:I')
+			return
+
+			box = StatusBox(
+				title='>bump world',
+				description='Github -> Server',
+				thumbnail='https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/loading.gif?raw=true',
+				footer='Action in progress...',
+				author=ctx.message.author
+			)
+			msg = await channel.send(embed=box)
+
+			await ctx.message.delete()
+
+			sleep(2.5)
+			git.bump_world()
+
+			box.set_footer('Action complete!')
+			box.set_thumbnail('https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/checkmark.gif?raw=true')
+			await msg.edit(embed=box)
+
+
+		elif arg == 'resourcepack':
+			box = StatusBox(
+				title='>bump resourcepack',
+				description='Github -> Server',
+				thumbnail='https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/loading.gif?raw=true',
+				footer='Action in progress...',
+				author=ctx.message.author
+			)
+			msg = await channel.send(embed=box)
+
+			await ctx.message.delete()
+
+			sleep(2.5)
+			git.bump_resourcepack()
+
+			box.set_footer('Action complete!')
+			box.set_thumbnail('https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/checkmark.gif?raw=true')
+			await msg.edit(embed=box)
+
+
+		elif arg == 'datapack':
+			box = StatusBox(
+				title='>bump datapack',
+				description='Github -> Server',
+				thumbnail='https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/loading.gif?raw=true',
+				footer='Action in progress...',
+				author=ctx.message.author
+			)
+			msg = await channel.send(embed=box)
+
+			await ctx.message.delete()
+
+			sleep(2.5)
+			git.bump_datapack()
+			sleep(2.5)
+
+			box.set_footer('Action complete!')
+			box.set_thumbnail('https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/checkmark.gif?raw=true')
+			await msg.edit(embed=box)
 
 
 	except Exception as e:
 		await channel.send(f'```\n{e}\n```')
 
-@bot.command(name='pull')
-async def pull(ctx):
+
+bot.remove_command('help')
+
+@bot.command(name='push')
+async def push(ctx):
+
+	if ctx.guild.id != 867481364538327050: return
+
 	message:discord.Message = ctx.message
 	channel:discord.TextChannel = message.channel
 	try:
 		command, arg = message.content[1:].split(' ')
 
 		if arg == 'world':
+			box = StatusBox(
+				title='>push world',
+				description='Server -> Github',
+				thumbnail='https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/loading.gif?raw=true',
+				footer='Action in progress...',
+				author=ctx.message.author
+			)
+			msg = await channel.send(embed=box)
 
-			msg = await channel.send(embed=discord.Embed(
-				title='>pull world',
-				description='Taking the world from the server and putting it on the github repo'
-			).set_thumbnail(
-				url=''
-			))
+			await ctx.message.delete()
 
-			# git.pull_world()
-			sleep(1)
+			sleep(2.5)
+			git.push_world()
 
-			await msg.edit(embed=discord.Embed(
-				title='>pull world',
-				description='World synced to git'
-			).set_thumbnail(
-				url=''
-			))
+			box.set_footer('Action Complete!')
+			box.set_thumbnail('https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/checkmark.gif?raw=true')
+			await msg.edit(embed=box)
 
 	except Exception as e:
 		await channel.send(f'```\n{e}\n```')
