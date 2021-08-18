@@ -33,7 +33,7 @@ async def rebootmc(ctx):
 	box = StatusBox(
 		title='>rebootserver',
 		description='Server',
-		thumbnail='https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/loading.gif?raw=true',
+		thumbnail='https://raw.githubusercontent.com/SnaveSutit/PuffyBoi/main/src/assets/loading.gif',
 		footer='Action in progress...',
 		author=ctx.message.author
 	)
@@ -42,7 +42,7 @@ async def rebootmc(ctx):
 	rc.execute('stop')
 
 	box.set_footer('Action Complete!')
-	box.set_thumbnail('https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/checkmark.gif?raw=true')
+	box.set_thumbnail('https://raw.githubusercontent.com/SnaveSutit/PuffyBoi/main/src/assets/checkmark.gif')
 	await msg.edit(embed=box)
 
 
@@ -66,7 +66,7 @@ async def bump(ctx):
 			box = StatusBox(
 				title='>bump world',
 				description='Github -> Server',
-				thumbnail='https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/loading.gif?raw=true',
+				thumbnail='https://raw.githubusercontent.com/SnaveSutit/PuffyBoi/main/src/assets/loading.gif',
 				footer='Action in progress...',
 				author=ctx.message.author
 			)
@@ -78,7 +78,7 @@ async def bump(ctx):
 			git.bump_world()
 
 			box.set_footer('Action complete!')
-			box.set_thumbnail('https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/checkmark.gif?raw=true')
+			box.set_thumbnail('https://raw.githubusercontent.com/SnaveSutit/PuffyBoi/main/src/assets/checkmark.gif')
 			await msg.edit(embed=box)
 
 
@@ -86,7 +86,7 @@ async def bump(ctx):
 			box = StatusBox(
 				title='>bump resourcepack',
 				description='Github -> Server',
-				thumbnail='https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/loading.gif?raw=true',
+				thumbnail='https://raw.githubusercontent.com/SnaveSutit/PuffyBoi/main/src/assets/loading.gif',
 				footer='Action in progress...',
 				author=ctx.message.author
 			)
@@ -98,7 +98,7 @@ async def bump(ctx):
 			git.bump_resourcepack()
 
 			box.set_footer('Action complete!')
-			box.set_thumbnail('https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/checkmark.gif?raw=true')
+			box.set_thumbnail('https://raw.githubusercontent.com/SnaveSutit/PuffyBoi/main/src/assets/checkmark.gif')
 			await msg.edit(embed=box)
 
 
@@ -106,7 +106,7 @@ async def bump(ctx):
 			box = StatusBox(
 				title='>bump datapack',
 				description='Github -> Server',
-				thumbnail='https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/loading.gif?raw=true',
+				thumbnail='https://raw.githubusercontent.com/SnaveSutit/PuffyBoi/main/src/assets/loading.gif',
 				footer='Action in progress...',
 				author=ctx.message.author
 			)
@@ -119,7 +119,7 @@ async def bump(ctx):
 			sleep(2.5)
 
 			box.set_footer('Action complete!')
-			box.set_thumbnail('https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/checkmark.gif?raw=true')
+			box.set_thumbnail('https://raw.githubusercontent.com/SnaveSutit/PuffyBoi/main/src/assets/checkmark.gif')
 			await msg.edit(embed=box)
 
 
@@ -143,7 +143,7 @@ async def push(ctx):
 			box = StatusBox(
 				title='>push world',
 				description='Server -> Github',
-				thumbnail='https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/loading.gif?raw=true',
+				thumbnail='https://raw.githubusercontent.com/SnaveSutit/PuffyBoi/main/src/assets/loading.gif',
 				footer='Action in progress...',
 				author=ctx.message.author
 			)
@@ -155,7 +155,7 @@ async def push(ctx):
 			git.push_world()
 
 			box.set_footer('Action Complete!')
-			box.set_thumbnail('https://github.com/SnaveSutit/PuffyBoi/blob/main/src/assets/checkmark.gif?raw=true')
+			box.set_thumbnail('https://raw.githubusercontent.com/SnaveSutit/PuffyBoi/main/src/assets/checkmark.gif')
 			await msg.edit(embed=box)
 
 	except Exception as e:
